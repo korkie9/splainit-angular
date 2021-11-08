@@ -1,0 +1,38 @@
+[
+    {
+      "id": "uhdcjisdnciudsvhiu",
+      "name": "The swiss",
+      "creator": "amy",
+      "teamNames": ["t1", "t2", "t3"],
+      "noPlayersPerTeam": 3,
+      "noWordsPerPlayer": 3,
+      "password": "hello"
+    },
+    {
+        "id": "jvjfuyuyfuyfufuyfu",
+        "name": "Boardslide",
+        "creator": "luke",
+        "teamNames": ["t1", "t2", "t3"],
+        "noPlayersPerTeam": 3,
+        "noWordsPerPlayer": 3,
+        "password": "hello"
+      },
+      {
+        "id": "uvuuyuyguyguyfuyf",
+        "name": "Blue dream",
+        "creator": "migs",
+        "teamNames": ["t1", "t2", "t3"],
+        "noPlayersPerTeam": 3,
+        "noWordsPerPlayer": 3,
+        "password": "hello"
+      },
+      {
+        "id": "oiuytfkjhvjhghj",
+        "name": "Uwu",
+        "creator": "justin",
+        "teamNames": ["t1", "t2", "t3"],
+        "noPlayersPerTeam": 3,
+        "noWordsPerPlayer": 3,
+        "password": "hello"
+      }
+  ]

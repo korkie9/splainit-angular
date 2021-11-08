@@ -1,0 +1,28 @@
+<app-layout>
+  <div style="justify-content: center; align-items: center; text-align: center">
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Search Games</mat-label>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="searchString"
+        placeholder="Game Name"
+        (keyup)="setSearchString()"
+      />
+    </mat-form-field>
+    <button [routerLink]="['/games/create-game']" mat-raised-button style="justify-content: center; height: 50px">
+      Create Game
+    </button>
+  </div>
+  <div
+    *ngFor="let game of filteredGames"
+    style="margin: 4px; margin-left: 10%; margin-right: 10%"
+  >
+    <a style="text-decoration: none" [routerLink]="['/games/' + game.id]">
+      <mat-card>
+        <mat-card-title>{{ game.name }}</mat-card-title>
+        <mat-card-subtitle>Creator: {{ game.creator }}</mat-card-subtitle>
+      </mat-card>
+    </a>
+  </div>
+</app-layout>

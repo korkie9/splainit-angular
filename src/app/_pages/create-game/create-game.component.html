@@ -1,0 +1,115 @@
+<app-layout>
+  <div style="padding: 10%">
+    <form [formGroup]="createGameForm" class="createGameForm">
+      <mat-label style="font-size: larger">Create Game</mat-label>
+      <mat-form-field appearance="outline">
+        <mat-label>Game Name*</mat-label>
+        <input
+          matInput
+          type="text"
+          id="gameName"
+          formControlName="gameName"
+          placeholder="Game Name"
+        />
+      </mat-form-field>
+      <p
+        *ngIf="
+          2 > gameName?.value.length && (gameName?.touched || gameName?.dirty)
+        "
+        style="color: red"
+      >
+        Game Name must contain at least 2 characters
+      </p>
+      <p
+        *ngIf="
+          gameName?.value.length > 25 && (gameName?.touched || gameName?.dirty)
+        "
+        style="color: red"
+      >
+        Game Name must fewer than 25 characters
+      </p>
+      <mat-form-field appearance="outline">
+        <mat-label>Words per players*</mat-label>
+        <input
+          matInput
+          type="number"
+          value="1"
+          id="wordsPerPlayer"
+          formControlName="wordsPerPlayer"
+          placeholder="Words per player"
+        />
+      </mat-form-field>
+      <p
+        *ngIf="
+          1 > wordsPerPlayer?.value &&
+          (wordsPerPlayer?.touched || wordsPerPlayer?.dirty)
+        "
+        style="color: red"
+      >
+        This field must contain a number between 1 and 100
+      </p>
+
+      <!------------------------------------------------------------->
+
+      <form
+        [formGroup]="teamNamesForm"
+        (ngSubmit)="addTeam()"
+        style="display: flex; flex-direction: column"
+      >
+        <mat-label>Add Teams</mat-label>
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Team Name</mat-label>
+            <input
+              matInput
+              formControlName="teamNameField"
+              type="text"
+              placeholder="Team Name"
+            />
+          </mat-form-field>
+          <button
+            mat-raised-button
+            type="submit"
+            [disabled]="teamNamesForm.invalid"
+            style="
+              margin: 5px;
+              justify-self: center;
+              align-self: center;
+              border-radius: 100px;
+            "
+            color="primary"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </form>
+      <!---------------------------->
+      <div
+        style="margin: 5px; display: flex; flex-direction: row;"
+        *ngFor="let team of teamNames"
+      >
+        <mat-card style="width: 80%">{{ team }}</mat-card>
+        <button mat-stroked-button type="button" (click)="removeName(team)" style="width: 5px;">
+          <mat-icon>remove</mat-icon>
+        </button>
+      </div>
+      <p style="color: red">{{ createError }}</p>
+      <button
+        (click)="createGame()"
+        style="margin: 5px"
+        type="submit"
+        [disabled]="
+          createGameForm.invalid ||
+          1 > wordsPerPlayer?.value ||
+          !teamNames ||
+          2 > teamNames.length
+        "
+        mat-raised-button
+        type="button"
+        color="primary"
+      >
+        Create
+      </button>
+    </form>
+  </div>
+</app-layout>
