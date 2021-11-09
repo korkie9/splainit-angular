@@ -1,9 +1,9 @@
 export interface Game {
     id: string,
     name: string,
-    creator: "amy",
+    creator: string,
     teamNames: string[],
-    noPlayersPerTeam: number,
+
     noWordsPerPlayer: number,
     password: string
 }

@@ -1,0 +1,38 @@
+<app-layout>
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="login()"
+    style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-top: 10%;"
+  >
+    <mat-label>Add Teams</mat-label>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Username or Email*</mat-label>
+      <input
+        matInput
+        formControlName="username"
+        type="text"
+        placeholder="Username"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password*</mat-label>
+      <input
+        matInput
+        formControlName="password"
+        type="password"
+        placeholder="Password"
+      />
+    </mat-form-field>
+    <p style="color: red">{{errorMessage}}</p>
+    <button
+      mat-raised-button
+      type="submit"
+      [disabled]="loginForm.invalid"
+      style="margin: 5px; justify-self: center; align-self: center"
+      color="primary"
+    >
+    Login
+    </button>
+  </form>
+</app-layout>

@@ -8,6 +8,8 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { Game } from 'src/app/_models/game.model';
+import { GamesService } from 'src/app/_services/games.service';
 
 @Component({
   selector: 'app-create-game',
@@ -20,7 +22,7 @@ export class CreateGameComponent implements OnInit {
   teamNames!: string[];
   createError!: string;
   gameNameError!: string;
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private gameService: GamesService) {}
 
   get gameName(): AbstractControl | null {
     return this.createGameForm.get('gameName');
@@ -31,6 +33,9 @@ export class CreateGameComponent implements OnInit {
   get teamNameField(): AbstractControl | null {
     return this.teamNamesForm.get('teamNameField');
   }
+  get password(): AbstractControl | null {
+    return this.createGameForm.get('password');
+  }
 
   ngOnInit(): void {
     this.createGameForm = this.fb.group(
@@ -39,6 +44,14 @@ export class CreateGameComponent implements OnInit {
           '',
           [
             Validators.minLength(2),
+            Validators.required,
+            Validators.maxLength(25),
+          ],
+        ],
+        password: [
+          '',
+          [
+            Validators.minLength(6),
             Validators.required,
             Validators.maxLength(25),
           ],
@@ -108,9 +121,15 @@ export class CreateGameComponent implements OnInit {
       this.createError = 'Please add at least 2 teams';
       return;
     }
-    const name = this.gameName?.value;
-    const num = this.wordsPerPlayer?.value;
-    const teams = this.teamNames;
-    console.log(JSON.stringify({ name: name, wpp: num, teams: teams }));
+    const game: Game = {
+      id: (this.gameService.gamesList().length + 1).toLocaleString(),
+      name: this.gameName?.value,
+      creator: 'korkie',
+      teamNames: this.teamNames,
+      noWordsPerPlayer: this.wordsPerPlayer?.value,
+      password: this.password?.value
+    }
+    this.gameService.addGame(game)
+    console.log(JSON.stringify(game))
   }
 }

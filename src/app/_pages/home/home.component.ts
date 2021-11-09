@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Game } from 'src/app/_models/game.model';
+import { GameIdAndPassword } from 'src/app/_models/gameIdAndPassword.model';
 import { GamesService } from 'src/app/_services/games.service';
 
 @Component({
@@ -26,12 +27,17 @@ export class HomeComponent implements OnDestroy {
         .includes(this.searchString.toLowerCase().trim())
     );
   }
+  enterGame(idAndPassword: GameIdAndPassword): void {
+    const enter: boolean = this.gamesService.enterGame(idAndPassword)
+  }
   ngOnInit(): void {
     console.log('initted');
-    this.gamesService.gamesList().subscribe((g) => {
-      this.games = g;
-      this.filteredGames = g;
-    });
+    // this.gamesService.gamesList().subscribe((g) => {
+    //   this.games = g;
+    //   this.filteredGames = g;
+    // });
+    this.games = this.gamesService.gamesList()
+    this.filteredGames = this.gamesService.gamesList()
   }
   ngOnDestroy(): void {}
 }

@@ -2,6 +2,7 @@
   <div style="padding: 10%">
     <form [formGroup]="createGameForm" class="createGameForm">
       <mat-label style="font-size: larger">Create Game</mat-label>
+      <form>
       <mat-form-field appearance="outline">
         <mat-label>Game Name*</mat-label>
         <input
@@ -12,6 +13,7 @@
           placeholder="Game Name"
         />
       </mat-form-field>
+    </form>
       <p
         *ngIf="
           2 > gameName?.value.length && (gameName?.touched || gameName?.dirty)
@@ -28,6 +30,18 @@
       >
         Game Name must fewer than 25 characters
       </p>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password* (6-25 characters)</mat-label>
+        <input
+          matInput
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Game Password"
+        />
+      </mat-form-field>
+
       <mat-form-field appearance="outline">
         <mat-label>Words per players*</mat-label>
         <input
@@ -41,7 +55,7 @@
       </mat-form-field>
       <p
         *ngIf="
-          1 > wordsPerPlayer?.value &&
+          (1 > wordsPerPlayer?.value || wordsPerPlayer?.value > 100) &&
           (wordsPerPlayer?.touched || wordsPerPlayer?.dirty)
         "
         style="color: red"
@@ -85,11 +99,16 @@
       </form>
       <!---------------------------->
       <div
-        style="margin: 5px; display: flex; flex-direction: row;"
+        style="margin: 5px; display: flex; flex-direction: row"
         *ngFor="let team of teamNames"
       >
         <mat-card style="width: 80%">{{ team }}</mat-card>
-        <button mat-stroked-button type="button" (click)="removeName(team)" style="width: 5px;">
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="removeName(team)"
+          style="width: 5px"
+        >
           <mat-icon>remove</mat-icon>
         </button>
       </div>

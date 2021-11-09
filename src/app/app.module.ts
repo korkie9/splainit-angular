@@ -13,6 +13,8 @@ import { GameComponent } from './_components/game/game.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateGameComponent } from './_pages/create-game/create-game.component';
 import { LayoutComponent } from './_layouts/layout/layout.component';
+import { LoginComponent } from './_pages/login/login.component';
+import { SignupComponent } from './_pages/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { LayoutComponent } from './_layouts/layout/layout.component';
     GameSelectionCardComponent,
     GameComponent,
     CreateGameComponent,
-    LayoutComponent
+    LayoutComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

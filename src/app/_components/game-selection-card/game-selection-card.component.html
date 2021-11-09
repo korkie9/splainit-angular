@@ -1,1 +1,29 @@
-<p>game-selection-card works!</p>
+<a
+  *ngIf="!selected; else password"
+  style="text-decoration: none"
+  (click)="select()"
+>
+  <mat-card>
+    <mat-card-title>{{ game.name }}</mat-card-title>
+    <mat-card-subtitle>Creator: {{ game.creator }}</mat-card-subtitle>
+  </mat-card>
+</a>
+
+<ng-template #password>
+  <mat-card>
+    <mat-card-title>{{ game.name }}</mat-card-title>
+    <mat-card-subtitle>Creator: {{ game.creator }}</mat-card-subtitle>
+    <form (ngSubmit)="enter()">
+    <mat-form-field appearance="outline">
+        <mat-label>Password*</mat-label>
+        <input
+          matInput
+          type="password"
+          id="password"
+          placeholder="Password"
+        />
+      </mat-form-field>
+      <button mat-button type="submit" color="primary">Enter</button>
+    </form>
+  </mat-card>
+</ng-template>
