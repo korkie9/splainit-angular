@@ -1,1 +1,62 @@
-<p>signup works!</p>
+<app-layout>
+    <form
+      [formGroup]="signupForm"
+      (ngSubmit)="signUp()"
+      style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-top: 10%;"
+    >
+      <mat-label style="font-size: x-large; padding: 3px">Sign up</mat-label>
+      <mat-form-field appearance="outline">
+        <mat-label>Email*</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          type="email"
+          placeholder="Email"
+        />
+      </mat-form-field>  
+      <mat-form-field appearance="outline">
+        <mat-label>Username*</mat-label>
+        <input
+          matInput
+          formControlName="username"
+          type="text"
+          placeholder="Username"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password*</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          type="password"
+          placeholder="Password"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password*</mat-label>
+        <input
+          matInput
+          formControlName="confirmPassword"
+          type="password"
+          placeholder="Confirm Password"
+        />
+      </mat-form-field>
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="signupForm.invalid"
+        style="margin: 5px; justify-self: center; align-self: center"
+        color="primary"
+      >
+      Sign up
+      </button>
+      <div style="display: flex; flex-direction: row; padding: 4px">
+        <p>Have an account?</p>
+        <a
+          [routerLink]="['/login']"
+          style="margin-left: 2px; text-decoration: none"
+          >Login</a
+        >
+      </div>
+    </form>
+  </app-layout>

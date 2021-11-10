@@ -9,6 +9,7 @@ import { GameIdAndPassword } from '../_models/gameIdAndPassword.model';
   providedIn: 'root',
 })
 export class GamesService {
+  private currentGame$!: Game;
   private games: Game[] = [
     {
       id: 'uhdcjisdnciudsvhiu',
@@ -51,19 +52,27 @@ export class GamesService {
   }
   addGame(game: Game): void {
     this.games.push(game);
+    this.currentGame$ = game;
     this.router.navigate([`games/${game.id}`]);
   }
   enterGame(idAndPassword: GameIdAndPassword): boolean {
     let enter: boolean = false;
-    for(let game of this.games){
+
+    for (let game of this.games) {
       if (
         game.id === idAndPassword.id &&
         idAndPassword.password === game.password
       ) {
         enter = true;
+        this.currentGame$ = game
       }
-    };
-    if(enter === true) this.router.navigate([`games/${idAndPassword.id}`])
+    }
+    if (enter === true) {
+      this.router.navigate([`games/${idAndPassword.id}`]);
+    }
     return enter;
+  }
+  currentGame(): Game {
+    return this.currentGame$;
   }
 }

@@ -2,9 +2,15 @@
   <form
     [formGroup]="loginForm"
     (ngSubmit)="login()"
-    style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-top: 10%;"
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-top: 10%;
+    "
   >
-    <mat-label>Add Teams</mat-label>
+    <mat-label style="font-size: x-large; padding: 3px">Login</mat-label>
 
     <mat-form-field appearance="outline">
       <mat-label>Username or Email*</mat-label>
@@ -24,7 +30,7 @@
         placeholder="Password"
       />
     </mat-form-field>
-    <p style="color: red">{{errorMessage}}</p>
+    <p style="color: red">{{ errorMessage }}</p>
     <button
       mat-raised-button
       type="submit"
@@ -32,7 +38,15 @@
       style="margin: 5px; justify-self: center; align-self: center"
       color="primary"
     >
-    Login
+      Login
     </button>
+    <div style="display: flex; flex-direction: row; padding: 4px">
+      <p>Don't an account?</p>
+      <a
+        [routerLink]="['/signup']"
+        style="margin-left: 2px; text-decoration: none"
+        >Sign up</a
+      >
+    </div>
   </form>
 </app-layout>

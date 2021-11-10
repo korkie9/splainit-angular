@@ -2,7 +2,6 @@
   <div style="padding: 10%">
     <form [formGroup]="createGameForm" class="createGameForm">
       <mat-label style="font-size: larger">Create Game</mat-label>
-      <form>
       <mat-form-field appearance="outline">
         <mat-label>Game Name*</mat-label>
         <input
@@ -13,7 +12,6 @@
           placeholder="Game Name"
         />
       </mat-form-field>
-    </form>
       <p
         *ngIf="
           2 > gameName?.value.length && (gameName?.touched || gameName?.dirty)

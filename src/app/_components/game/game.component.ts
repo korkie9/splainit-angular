@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Game } from 'src/app/_models/game.model';
+import { GamesService } from 'src/app/_services/games.service';
 
 @Component({
   selector: 'app-game',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-
-  constructor() { }
+  game!: Game
+  constructor(private gameService: GamesService) { }
 
   ngOnInit(): void {
+    this.game = this.gameService.currentGame()
+    console.log(JSON.stringify(this.game))
   }
+  joinTeam(name: string){
+    console.log(name)
+  }
+
 
 }

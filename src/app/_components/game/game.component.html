@@ -1,1 +1,11 @@
-<p>game works!</p>
+<app-layout>
+  <div style="padding: 10%">
+    <p style="font-weight: bolder; font-size: xx-large; padding: 5px">Join a team</p>
+    <div *ngFor="let name of game.teamNames" style="margin: 4px">
+      <mat-card>
+        <mat-card-title>{{ name }}</mat-card-title>
+        <button mat-raised-button color="primary" (click)="joinTeam(name)">Join</button>
+      </mat-card>
+    </div>
+  </div>
+</app-layout>

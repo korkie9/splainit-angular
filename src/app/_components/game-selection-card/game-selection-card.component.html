@@ -13,7 +13,6 @@
   <mat-card>
     <mat-card-title>{{ game.name }}</mat-card-title>
     <mat-card-subtitle>Creator: {{ game.creator }}</mat-card-subtitle>
-    <form (ngSubmit)="enter()">
     <mat-form-field appearance="outline">
         <mat-label>Password*</mat-label>
         <input
@@ -21,9 +20,12 @@
           type="password"
           id="password"
           placeholder="Password"
+          #box
+          (keyup)="setPassword(box.value)"
+          (keyup.enter)="onEnter()"
         />
       </mat-form-field>
-      <button mat-button type="submit" color="primary">Enter</button>
-    </form>
+      <button mat-button type="submit" color="primary" (click)="onEnter()">Join</button>
+      <p style="color: red">{{errorMessage}}</p>
   </mat-card>
 </ng-template>

@@ -39,6 +39,7 @@ export class AuthService {
         password === user.password
       ) {
         loggedIn = true;
+        localStorage.setItem('username', user.username);
       }
     });
     if (loggedIn) {

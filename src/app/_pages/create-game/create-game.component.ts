@@ -5,6 +5,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
 import { Validators } from '@angular/forms';
@@ -38,35 +39,24 @@ export class CreateGameComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createGameForm = this.fb.group(
-      {
-        gameName: [
-          '',
-          [
-            Validators.minLength(2),
-            Validators.required,
-            Validators.maxLength(25),
-          ],
-        ],
-        password: [
-          '',
-          [
-            Validators.minLength(6),
-            Validators.required,
-            Validators.maxLength(25),
-          ],
-        ],
-        wordsPerPlayer: [
-          1,
-          [
-            Validators.maxLength(3),
-            Validators.required,
-            Validators.minLength(1),
-          ],
-        ],
-      },
-      { Validator: this.wordsPerPlayerIsLargerThanZero }
-    );
+    this.createGameForm = new FormGroup({
+      gameName: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(25),
+        Validators.minLength(2),
+      ]),
+      password: new FormControl('', [
+        Validators.minLength(6),
+        Validators.required,
+        Validators.maxLength(25),
+      ]),
+      wordsPerPlayer: new FormControl(1, [
+        Validators.maxLength(3),
+        Validators.required,
+        Validators.minLength(1),
+        this.wordsPerPlayerIsLargerThanZero()
+      ]),
+    });
     this.teamNamesForm = this.fb.group({
       teamNameField: [
         '',
@@ -79,11 +69,17 @@ export class CreateGameComponent implements OnInit {
     });
   }
 
-  wordsPerPlayerIsLargerThanZero(g: FormControl) {
-    const wpp = g.get('wordsPerPlayer');
-    return wpp?.value > 0
-      ? null
-      : this.createGameForm.setErrors({ wordsPerPlayerIsLargerThanZero: true });
+  // wordsPerPlayerIsLargerThanZero(g: FormControl) {
+  //   const wpp = g.get('wordsPerPlayer');
+  //   return wpp?.value > 0
+  //     ? null
+  //     : this.createGameForm.setErrors({ wordsPerPlayerIsLargerThanZero: true });
+  // }
+  wordsPerPlayerIsLargerThanZero(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const wpp = control.get('wordsPerPlayer');
+      return wpp?.value > 0 ? { wordsPerPlayerIsLargerThanZero: true } : null;
+    };
   }
   teamExists = (t: string): boolean => {
     if (!this.teamNames) return false;
@@ -127,9 +123,9 @@ export class CreateGameComponent implements OnInit {
       creator: 'korkie',
       teamNames: this.teamNames,
       noWordsPerPlayer: this.wordsPerPlayer?.value,
-      password: this.password?.value
-    }
-    this.gameService.addGame(game)
-    console.log(JSON.stringify(game))
+      password: this.password?.value,
+    };
+    this.gameService.addGame(game);
+    console.log(JSON.stringify(game));
   }
 }

@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Game } from 'src/app/_models/game.model';
 import { GameIdAndPassword } from 'src/app/_models/gameIdAndPassword.model';
+import { GamesService } from 'src/app/_services/games.service';
 
 @Component({
   selector: 'app-game-selection-card',
@@ -10,10 +11,11 @@ import { GameIdAndPassword } from 'src/app/_models/gameIdAndPassword.model';
 })
 export class GameSelectionCardComponent implements OnInit {
   selected!: boolean
-  @Output() onEnter = new EventEmitter();
+  password!: string
   @Input() game!: Game;
+  errorMessage!: string;
 
-  constructor() { }
+  constructor(private gameService: GamesService) { }
 
   ngOnInit(): void {
   }
@@ -21,13 +23,17 @@ export class GameSelectionCardComponent implements OnInit {
   select(): void{
     this.selected = true
   }
+  setPassword(password: string){
+    this.password = password
+  }
 
-  enter(): void{
+  onEnter(): void{
     const idAndPassword: GameIdAndPassword = {
       id: this.game.id,
-      password: this.game.password
+      password: this.password
     }
-    this.onEnter.emit(idAndPassword)
+    const entered = this.gameService.enterGame(idAndPassword)
+    if(entered === false) this.errorMessage = 'Password Incorrect'
   }
 
 }
