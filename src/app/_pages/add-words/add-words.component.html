@@ -1,0 +1,47 @@
+<app-layout>
+  <form
+    [formGroup]="addWordForm"
+    (ngSubmit)="addWord()"
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-top: 10%;
+    "
+  >
+    <mat-label style="font-size: large; padding: 5px">Add Words</mat-label>
+    <mat-form-field appearance="outline">
+      <mat-label>Type Word/Phrase</mat-label>
+      <input
+        matInput
+        formControlName="word"
+        type="text"
+        placeholder="Word/Phrase"
+      />
+    </mat-form-field>
+    <button
+      mat-raised-button
+      type="submit"
+      [disabled]="addWordForm.invalid"
+      style="margin: 5px; justify-self: center; align-self: center"
+      color="primary"
+    >
+      Add
+    </button>
+    <div
+      *ngFor="let word of words"
+      style="display: flex; flex-direction: row; margin: 0.5rem"
+    >
+      <mat-card style="display: flex; flex-direction: row">
+        <mat-card-title style="margin-right: 3px">{{ word }}</mat-card-title>
+        <a (click)="deleteWord(word)">
+          <mat-icon>delete</mat-icon>
+        </a>
+      </mat-card>
+    </div>
+  </form>
+  <div *ngIf="words.length > 0">
+    <button mat-raised-button (click)="start()">Start</button>
+  </div>
+</app-layout>

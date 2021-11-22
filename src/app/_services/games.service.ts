@@ -44,6 +44,7 @@ export class GamesService {
       password: 'hello',
     },
   ];
+  private words: string[] = [];
 
   constructor(private http: HttpClient, private router: Router) {}
   // private _url : string = "../../assets/games.json";
@@ -53,7 +54,7 @@ export class GamesService {
   addGame(game: Game): void {
     this.games.push(game);
     this.currentGame$ = game;
-    this.router.navigate([`games/${game.id}`]);
+    this.router.navigate([`games/join/${game.id}`]);
   }
   enterGame(idAndPassword: GameIdAndPassword): boolean {
     let enter: boolean = false;
@@ -64,15 +65,41 @@ export class GamesService {
         idAndPassword.password === game.password
       ) {
         enter = true;
-        this.currentGame$ = game
+        this.currentGame$ = game;
+        localStorage.setItem("gameId", game.id)
       }
     }
     if (enter === true) {
-      this.router.navigate([`games/${idAndPassword.id}`]);
+      this.router.navigate([`games/join/${idAndPassword.id}`]);
     }
     return enter;
   }
+  joinGame(team: string, id: string): void {
+    console.log('team: ', team);
+    console.log('id: ', id);
+    this.router.navigate([`games/add-words/${id}`]);
+  }
   currentGame(): Game {
     return this.currentGame$;
+  }
+  addWord(word: string): void {
+    this.words.push(word);
+  }
+  get getWords(): string[] {
+    return this.words;
+  }
+  deleteWord(word: string): void {
+    const index = this.words.indexOf(word);
+    if (index > -1) {
+      this.words.splice(index, 1);
+    }
+  }
+  startGame(id: string | null): void{
+    if(!id){
+      alert("It seems you are not registered to play this game")
+      this.router.navigate([`games`])
+      return
+    }
+    this.router.navigate([`games/play/${id}`])
   }
 }

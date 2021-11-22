@@ -1,0 +1,11 @@
+<app-layout>
+    <div *ngIf="!started; else game">
+        <app-wait-screen text="Waiting for other players to join..."></app-wait-screen>
+    </div>
+</app-layout>
+
+<ng-template #game>
+    <app-layout>
+        <div>game started</div>    
+    </app-layout>
+</ng-template>
