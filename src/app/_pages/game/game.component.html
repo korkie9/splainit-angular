@@ -1,11 +1,43 @@
+<!--Wait For start Screen-->
 <app-layout>
-    <div *ngIf="!started; else game">
-        <app-wait-screen text="Waiting for other players to join..."></app-wait-screen>
-    </div>
+  <div *ngIf="!started; else waitTurn">
+    <app-wait-screen
+      text="Waiting for other players to join..."
+    ></app-wait-screen>
+  </div>
 </app-layout>
 
-<ng-template #game>
-    <app-layout>
-        <div>game started</div>    
-    </app-layout>
+<!--Wait For turn Screen-->
+<ng-template #waitTurn>
+  <div *ngIf="!playerTurn; else start">
+    <app-wait-screen text="It is currently Greg's Turn"></app-wait-screen>
+  </div>
 </ng-template>
+
+<!---Start game button-->
+<ng-template #start>
+  <div *ngIf="!startGameTime; else timer" style="padding-top: 10%">
+    <p style="font-weight: bold; font-size: large;">Press start you're when ready</p>
+    <button mat-raised-button (click)="startTime()">Start</button>
+  </div>
+</ng-template>
+
+<!--Timer-->
+<ng-template #timer>
+    <div *ngIf="!ended; else end" style="padding-top: 5%">
+      <p>Game Started {{time}}</p>
+      <button (click)="stopTime()">Stop</button>
+      <button (click)="startTime()">Start</button>
+      <button (click)="endRound()">Finish</button>
+      <button (click)="addPoint()" [disabled]="nextButton">+</button>
+      <p>{{points}}</p>
+    </div>
+  </ng-template>
+
+  <!--End Game-->
+  <ng-template #end>
+    <div style="padding-top: 5%">
+      <p>Game ended</p>
+      <button (click)="next()">Next</button>
+    </div>
+  </ng-template>
