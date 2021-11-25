@@ -16,28 +16,96 @@
 
 <!---Start game button-->
 <ng-template #start>
-  <div *ngIf="!startGameTime; else timer" style="padding-top: 10%">
-    <p style="font-weight: bold; font-size: large;">Press start you're when ready</p>
+  <div *ngIf="!startGameTime; else game" style="padding-top: 10%">
+    <p style="font-weight: bold; font-size: large">
+      Press start you're when ready
+    </p>
     <button mat-raised-button (click)="startTime()">Start</button>
   </div>
 </ng-template>
 
 <!--Timer-->
-<ng-template #timer>
-    <div *ngIf="!ended; else end" style="padding-top: 5%">
-      <p>Game Started {{time}}</p>
-      <button (click)="stopTime()">Stop</button>
-      <button (click)="startTime()">Start</button>
-      <button (click)="endRound()">Finish</button>
-      <button (click)="addPoint()" [disabled]="nextButton">+</button>
-      <p>{{points}}</p>
-    </div>
-  </ng-template>
+<ng-template #game>
+  <div
+    *ngIf="!ended; else end"
+    style="
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+  <button
+  style="
+    background-color: grey;
+    border-radius: 100%;
+    width: 3rem;
+    height: 4rem;
+    margin: 2rem;
+  "
+  (click)="endRound()"
+  mat-button
+>
+  <mat-icon aria-hidden="false" aria-label="Example home icon"
+    >close</mat-icon
+  >
+</button>
+<p style="font-size: 3.5rem; margin: 2rem">{{ time }}</p>
+<p style="padding: 2rem; font-size: 3rem; color: white">
+  <mat-icon
+    aria-hidden="false"
+    style="color: black"
+    aria-label="Example home icon"
+    >beenhererounded</mat-icon
+  >{{ points }}
+</p>
+<p style="padding: 2rem; font-size: 2rem; color: white">
+  {{ currentWord }}
+</p>
+<div *ngIf="!paused; else play">
+  <a mat-button (click)="stopTime()">
+    <mat-icon
+      style="font-size: 2rem; padding: 0.5rem"
+      aria-hidden="false"
+      aria-label="Example home icon"
+      >pause</mat-icon
+    >
+  </a>
+</div>
 
-  <!--End Game-->
-  <ng-template #end>
-    <div style="padding-top: 5%">
-      <p>Game ended</p>
-      <button (click)="next()">Next</button>
-    </div>
-  </ng-template>
+
+    <button
+      style="
+        background-color: cyan;
+        border-radius: 100%;
+        width: 3rem;
+        height: 4rem;
+        margin: 1rem;
+      "
+      [disabled]="paused"
+      (click)="addPoint()"
+      mat-raised-button
+    >
+      <mat-icon aria-hidden="false" aria-label="Example home icon"
+        >check</mat-icon
+      >
+    </button>
+  </div>
+</ng-template>
+
+<!--End Game-->
+<ng-template #end>
+  <div style="padding-top: 10%">
+      <p style="font-weight: bold; font-size: 2rem; margin: 2rem">Score: {{ points }}</p>
+    <button mat-raised-button (click)="next()">Next</button>
+  </div>
+</ng-template>
+
+<!--Play Button-->
+<ng-template #play>
+  <button (click)="startTime()" mat-button>
+    <mat-icon aria-hidden="false" aria-label="Example home icon"
+      >play_arrow</mat-icon
+    >
+  </button></ng-template
+>

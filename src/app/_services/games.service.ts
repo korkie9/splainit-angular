@@ -44,7 +44,7 @@ export class GamesService {
       password: 'hello',
     },
   ];
-  private words: string[] = [];
+  private words: string[] = ['wabalubadubdub', 'skeetz', 'mangos', 'theeeeeeeeeeeeeznuts'];
 
   constructor(private http: HttpClient, private router: Router) {}
   // private _url : string = "../../assets/games.json";
@@ -101,5 +101,8 @@ export class GamesService {
       return
     }
     this.router.navigate([`games/play/${id}`])
+  }
+  remainingWords(): string[]{
+    return this.words
   }
 }

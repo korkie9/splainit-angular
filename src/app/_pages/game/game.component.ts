@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { GamesService } from 'src/app/_services/games.service';
 
 @Component({
   selector: 'app-game',
@@ -8,6 +9,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class GameComponent implements OnInit {
   started!: boolean;
+  paused!: boolean;
   playerWhosTurnItIs!: string;
   playerTurn!: boolean;
   startGameTime!: boolean;
@@ -16,8 +18,11 @@ export class GameComponent implements OnInit {
   timeoutId!: any;
   nextButton = false;
   points = 0;
-  ended!: boolean
-  constructor() {}
+  ended!: boolean;
+  words!: string[];
+  currentWord!: string;
+  currentWordNumber!: number;
+  constructor(private gamesService: GamesService) {}
 
   ngOnInit(): void {
     this.started = true;
@@ -25,6 +30,9 @@ export class GameComponent implements OnInit {
     this.playerWhosTurnItIs = 'Greg';
     this.startGameTime = false;
     this.ended = false
+    this.words = this.gamesService.remainingWords()
+    this.currentWordNumber = 0
+    this.currentWord = this.words[this.currentWordNumber]
   }
 
   startTime(): void {
@@ -42,8 +50,10 @@ export class GameComponent implements OnInit {
     }, (this.time + 1) * 1000);
     this.startGameTime = true;
     console.log('started');
+    this.paused = false
   }
   stopTime(): void {
+    this.paused = true;
     if(this.intervalId) clearInterval(this.intervalId);
     if(this.timeoutId) clearTimeout(this.timeoutId);
   }
@@ -52,10 +62,18 @@ export class GameComponent implements OnInit {
     this.startGameTime = false
   }
   addPoint(): void{
+    if(this.currentWordNumber === this.words.length - 1){
+      this.points += 1
+      this.ended = true
+      return
+    }
+    this.currentWordNumber += 1
+    this.currentWord = this.words[this.currentWordNumber]
     this.points += 1
   }
   endRound(): void{
-    this.stopTime()
     this.ended = true
+    this.stopTime()
+    
   }
 }
